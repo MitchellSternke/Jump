@@ -2,7 +2,8 @@
 
 #include <SDL2/SDL.h>
 
-#include "graphics/sdl2/Sdl2GraphicsSystem.hpp"
+#include "input/sdl2/Sdl2InputManager.hpp"
+#include "video/sdl2/Sdl2VideoManager.hpp"
 
 #define WINDOW_RESOLUTION_X 640
 #define WINDOW_RESOLUTION_Y 480
@@ -75,7 +76,12 @@ int main(int argc, char** argv)
         }
         else
         {
-            Sdl2GraphicsSystem graphicsSystem(window, SCREEN_RESOLUTION_X, SCREEN_RESOLUTION_Y);
+            Sdl2VideoManager videoManager(window, SCREEN_RESOLUTION_X, SCREEN_RESOLUTION_Y);
+            Sdl2InputManager inputManager;
+            while (!inputManager.shutdownReceived())
+            {
+                inputManager.update();
+            }
         }
     }
     catch (std::exception& e)

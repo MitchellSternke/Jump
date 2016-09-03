@@ -39,9 +39,12 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="source/Main.cpp" />
-		<Unit filename="source/graphics/GraphicsSystem.hpp" />
-		<Unit filename="source/graphics/sdl2/Sdl2GraphicsSystem.cpp" />
-		<Unit filename="source/graphics/sdl2/Sdl2GraphicsSystem.hpp" />
+		<Unit filename="source/input/InputManager.hpp" />
+		<Unit filename="source/input/sdl2/Sdl2InputManager.cpp" />
+		<Unit filename="source/input/sdl2/Sdl2InputManager.hpp" />
+		<Unit filename="source/video/VideoManager.hpp" />
+		<Unit filename="source/video/sdl2/Sdl2VideoManager.cpp" />
+		<Unit filename="source/video/sdl2/Sdl2VideoManager.hpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

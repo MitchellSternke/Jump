@@ -1,14 +1,14 @@
-#ifndef SDL2GRAPHICSSYSTEM_HPP
-#define SDL2GRAPHICSSYSTEM_HPP
+#ifndef SDL2VIDEOMANAGER_HPP
+#define SDL2VIDEOMANAGER_HPP
 
 #include <SDL2/SDL.h>
 
-#include "../GraphicsSystem.hpp"
+#include "../VideoManager.hpp"
 
 /**
  * Graphics system powered by SDL2/OpenGL.
  */
-class Sdl2GraphicsSystem : public GraphicsSystem
+class Sdl2VideoManager : public VideoManager
 {
 public:
     /**
@@ -18,7 +18,7 @@ public:
      * @param virtualScreenWidth the width of the virtual screen, in pixels.
      * @param virtualScreenHeight the height of the virtual screen, in pixels.
      */
-    Sdl2GraphicsSystem(SDL_Window* window, int virtualScreenWidth, int virtualScreenHeight);
+    Sdl2VideoManager(SDL_Window* window, int virtualScreenWidth, int virtualScreenHeight);
 
     void clearScreen();
     void drawRectangle(int x, int y, int width, int height);
@@ -30,4 +30,4 @@ private:
     int screenHeight;
 };
 
-#endif // SDL2GRAPHICSSYSTEM_HPP
+#endif // SDL2GRAPHICSMANAGER_HPP

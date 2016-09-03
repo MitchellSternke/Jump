@@ -1,13 +1,13 @@
-#ifndef GRAPHICSSYSTEM_HPP
-#define GRAPHICSSYSTEM_HPP
+#ifndef VIDEOMANAGER_HPP
+#define VIDEOMANAGER_HPP
 
 /**
  * Interface for graphical routines.
  */
-class GraphicsSystem
+class VideoManager
 {
 public:
-    virtual ~GraphicsSystem() {}
+    virtual ~VideoManager() {}
 
     /**
      * Clear the screen.
@@ -30,4 +30,4 @@ public:
     virtual void updateScreen()=0;
 };
 
-#endif // GRAPHICSSYSTEM_HPP
+#endif // VIDEOMANAGER_HPP
