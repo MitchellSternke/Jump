@@ -39,6 +39,14 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="source/Main.cpp" />
+		<Unit filename="source/game/Game.cpp" />
+		<Unit filename="source/game/Game.hpp" />
+		<Unit filename="source/game/GameState.cpp" />
+		<Unit filename="source/game/GameState.hpp" />
+		<Unit filename="source/game/GameStateManager.cpp" />
+		<Unit filename="source/game/GameStateManager.hpp" />
+		<Unit filename="source/game/states/StartupState.cpp" />
+		<Unit filename="source/game/states/StartupState.hpp" />
 		<Unit filename="source/input/InputManager.hpp" />
 		<Unit filename="source/input/sdl2/Sdl2InputManager.cpp" />
 		<Unit filename="source/input/sdl2/Sdl2InputManager.hpp" />

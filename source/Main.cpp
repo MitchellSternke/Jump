@@ -2,6 +2,7 @@
 
 #include <SDL2/SDL.h>
 
+#include "game/Game.hpp"
 #include "input/sdl2/Sdl2InputManager.hpp"
 #include "video/sdl2/Sdl2VideoManager.hpp"
 
@@ -76,12 +77,13 @@ int main(int argc, char** argv)
         }
         else
         {
+            // Setup managers
             Sdl2VideoManager videoManager(window, SCREEN_RESOLUTION_X, SCREEN_RESOLUTION_Y);
             Sdl2InputManager inputManager;
-            while (!inputManager.shutdownReceived())
-            {
-                inputManager.update();
-            }
+
+            // Run the game
+            Game game(inputManager, videoManager);
+            game.run();
         }
     }
     catch (std::exception& e)
