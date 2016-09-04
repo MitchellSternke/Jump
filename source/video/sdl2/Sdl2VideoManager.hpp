@@ -21,7 +21,12 @@ public:
     Sdl2VideoManager(SDL_Window* window, int virtualScreenWidth, int virtualScreenHeight);
 
     void clearScreen();
+    void drawLine(int x0, int y0, int x1, int y1);
     void drawRectangle(int x, int y, int width, int height);
+    void drawTriangle(int x0, int y0, int x1, int y1, int x2, int y2);
+    int getScreenHeight() const;
+    int getScreenWidth() const;
+    void setColor(unsigned color);
     void updateScreen();
 
 private:

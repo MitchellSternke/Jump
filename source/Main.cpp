@@ -58,6 +58,12 @@ static int initialize()
         return -1;
     }
 
+    // Attempt to enable vsync
+    if (SDL_GL_SetSwapInterval(1) < 0)
+    {
+        std::cout << "Warning: Unable to set VSync!\nDetails:\n" << SDL_GetError() << std::endl;
+    }
+
     // Success
     return 0;
 }

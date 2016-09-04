@@ -20,6 +20,11 @@ public:
 
 protected:
     /**
+     * Change the current game state to a different state.
+     */
+    void changeState(GameState* state);
+
+    /**
      * Event called whenever the state is requested to render to the screen.
      */
     virtual void onRender(VideoManager& video) const =0;

@@ -6,6 +6,12 @@ GameState::GameState() :
 {
 }
 
+void GameState::changeState(GameState* state)
+{
+    popState();
+    pushState(state);
+}
+
 void GameState::popState()
 {
     gameStateManager->popState();
