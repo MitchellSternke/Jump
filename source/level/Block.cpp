@@ -52,25 +52,23 @@ int Block::getY() const
 
 bool Block::hasBottomCollision(int x, int y) const
 {
-    return (collisionType == CollisionType::SOLID);
+    return (collisionType == CollisionType::SOLID && y == getHeight() - 1);
 }
 
 bool Block::hasLeftCollision(int x, int y) const
 {
-    return (collisionType == CollisionType::SOLID);
+    return (collisionType == CollisionType::SOLID && x == 0);
 }
 
 bool Block::hasRightCollision(int x, int y) const
 {
-    return (collisionType == CollisionType::SOLID);
+    return (collisionType == CollisionType::SOLID && x == getWidth() - 1);
 }
 
-bool Block::hasTopCollision(int x, int y) const
+bool Block::hasSlopeCollision(int x, int y) const
 {
-    switch (collisionType)
+    switch(collisionType)
     {
-    case CollisionType::PLATFORM:
-        return (y == 0);
     case CollisionType::SLOPE_LEFT:
         {
             int h = static_cast<int>(std::floor(
@@ -87,10 +85,29 @@ bool Block::hasTopCollision(int x, int y) const
             ));
             return (y == h);
         }
-    case CollisionType::SOLID:
-        return true;
-
     default:
         return false;
     }
+}
+
+bool Block::hasTopCollision(int x, int y) const
+{
+    switch (collisionType)
+    {
+    case CollisionType::PLATFORM:
+    case CollisionType::SOLID:
+        return (y == 0);
+    default:
+        return false;
+    }
+}
+
+void Block::setHeight(int height)
+{
+    this->height = height;
+}
+
+void Block::setWidth(int width)
+{
+    this->width = width;
 }

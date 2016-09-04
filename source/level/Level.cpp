@@ -42,6 +42,10 @@ bool Level::canEntityMoveDown(Entity& entity) const
     // Check for blocks below
     for (auto layer : layers)
     {
+        if (layer->hasSlopeCollision(entity.getCenterX(), entity.getBottom() + 1))
+        {
+            return false;
+        }
         // TODO: does this have to be every x coordinate?
         for (int x = 0; x < entity.width; x++)
         {
@@ -107,32 +111,14 @@ bool Level::canEntityMoveUp(Entity& entity) const
     return true;
 }
 
-void Level::handleSlopesForEntity(Entity& entity)
-{
-    // Go up/down slopes
-    for (auto layer : layers)
-    {
-        // Go up slopes that we run into
-        if (layer->hasTopCollision(entity.getCenterX(), entity.getBottom()))
-        {
-            moveEntityUp(entity);
-            break;
-        }
-
-        // Go down slopes that we run into
-        if (layer->hasTopCollision(entity.getCenterX(), entity.getBottom()))
-        {
-            // TODO: force sinking into blocks on the same layer
-            moveEntityDown(entity);
-            break;
-        }
-    }
-}
-
 bool Level::isEntityStandingOnLayer(const Layer& layer, const Entity& entity) const
 {
     // Check the bottom pixels of the entity's bounding box
     // TODO: we can probably only check every 16 pixels/the center to save time here
+    if (layer.hasSlopeCollision(entity.getCenterX(), entity.getBottom() + 1))
+    {
+        return true;
+    }
     for (int x = 0; x < entity.width; x++)
     {
         if (layer.hasTopCollision(entity.getLeft() + x, entity.getBottom() + 1))
@@ -185,8 +171,44 @@ bool Level::moveEntityUp(Entity& entity)
 
 void Level::moveEntityX(Entity& entity, float dx)
 {
+    int newCenterX;
+    if (dx > 0)
+    {
+        newCenterX = entity.getCenterX() + 1;
+    }
+    else
+    {
+        newCenterX = entity.getCenterX() - 1;
+    }
+
+    // Go up/down slopes
+    for (auto layer : layers)
+    {
+        // Are we standing on the layer with our center pixel?
+        if (!isEntityStandingOnLayer(*layer, entity))
+        {
+            // If not, ignore it since this doesn't apply
+            continue;
+        }
+
+        // Go up slopes that we run into
+        if (layer->hasSlopeCollision(newCenterX, entity.getBottom()))
+        {
+            entity.positionX += dx;
+            moveEntityUp(entity);
+            return;
+        }
+
+        // Go down slopes that we run into
+        if (layer->hasSlopeCollision(newCenterX, entity.getBottom() + 2))
+        {
+            entity.positionX += dx;
+            moveEntityY(entity, 1.0f); // Intentional: forced sinking. This may become a bug.
+            return;
+        }
+    }
+
     entity.positionX += dx;
-    handleSlopesForEntity(entity);
 }
 
 void Level::moveEntityY(Entity& entity, float dy)
@@ -229,7 +251,11 @@ void Level::moveLayerLeft(Layer& layer)
     {
         if (isEntityStandingOnLayer(layer, *entity))
         {
-            moveEntityLeft(*entity);
+            if (canEntityMoveLeft(*entity))
+            {
+                // Simply move to the left (no need to handle slopes)
+                entity->positionX--;
+            }
             continue;
         }
         for (int y = 0; y < entity->height; y++)
@@ -242,6 +268,16 @@ void Level::moveLayerLeft(Layer& layer)
         }
     }
     layer.positionX--;
+
+    // Catch any entities that got shoved into a slope (very rare)
+    // Usually happens when an entity is on a slope that moves into another layer
+    for (auto entity : entities)
+    {
+        if (layer.hasSlopeCollision(entity->getCenterX(), entity->getBottom()))
+        {
+            moveEntityUp(*entity);
+        }
+    }
 }
 
 void Level::moveLayerRight(Layer& layer)
@@ -251,7 +287,11 @@ void Level::moveLayerRight(Layer& layer)
     {
         if (isEntityStandingOnLayer(layer, *entity))
         {
-            moveEntityRight(*entity);
+            if (canEntityMoveRight(*entity))
+            {
+                // Simply move to the right (no need to handle slopes)
+                entity->positionX++;
+            }
             continue;
         }
         for (int y = 0; y < entity->height; y++)
@@ -264,6 +304,16 @@ void Level::moveLayerRight(Layer& layer)
         }
     }
     layer.positionX++;
+
+    // Catch any entities that got shoved into a slope (very rare)
+    // Usually happens when an entity is on a slope that moves into another layer
+    for (auto entity : entities)
+    {
+        if (layer.hasSlopeCollision(entity->getCenterX(), entity->getBottom()))
+        {
+            moveEntityUp(*entity);
+        }
+    }
 }
 
 void Level::moveLayerUp(Layer& layer)
@@ -305,16 +355,14 @@ void Level::render(VideoManager& video, int left, int right, int top, int bottom
             switch (block->collisionType)
             {
             case Block::CollisionType::SLOPE_LEFT:
-                video.drawTriangle(
-                    block->getLeft() + xOffset, block->getBottom() + 1 + yOffset,
+                video.drawLine(
                     block->getRight() + 1 + xOffset, block->getBottom() + 1 + yOffset,
                     block->getLeft() + xOffset, block->getTop() + yOffset
                 );
                 break;
             case Block::CollisionType::SLOPE_RIGHT:
-                video.drawTriangle(
+                video.drawLine(
                     block->getLeft() + xOffset, block->getBottom() + 1 + yOffset,
-                    block->getRight() + 1 + xOffset, block->getBottom() + 1 + yOffset,
                     block->getRight() + 1 + xOffset, block->getTop() + yOffset
                 );
                 break;
@@ -329,7 +377,7 @@ void Level::render(VideoManager& video, int left, int right, int top, int bottom
             case Block::CollisionType::PLATFORM:
                 video.drawLine(
                     block->getLeft() + xOffset, block->getTop() + yOffset,
-                    block->getRight() + xOffset, block->getTop() + yOffset);
+                    block->getRight() + 1 + xOffset, block->getTop() + yOffset);
                 break;
 
             default:

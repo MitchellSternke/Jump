@@ -69,6 +69,11 @@ public:
     bool hasRightCollision(int x, int y) const;
 
     /**
+     * Check if the layer has a top collision from a slope tile.
+     */
+    bool hasSlopeCollision(int x, int y) const;
+
+    /**
      * Check if the layer causes a collision from the top at a particular pixel.
      */
     bool hasTopCollision(int x, int y) const;

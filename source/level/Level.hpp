@@ -55,7 +55,6 @@ private:
     bool canEntityMoveLeft(Entity& entity) const;
     bool canEntityMoveRight(Entity& entity) const;
     bool canEntityMoveUp(Entity& entity) const;
-    void handleSlopesForEntity(Entity& entity);
     bool isEntityStandingOnLayer(const Layer& layer, const Entity& entity) const;
     bool moveEntityDown(Entity& entity);
     bool moveEntityLeft(Entity& entity);

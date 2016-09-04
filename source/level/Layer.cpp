@@ -162,6 +162,22 @@ bool Layer::hasRightCollision(int x, int y) const
     return block->hasRightCollision(x - block->getX(), y - block->getY());
 }
 
+bool Layer::hasSlopeCollision(int x, int y) const
+{
+    auto block = getBlockAt(x, y);
+    if (block == nullptr)
+    {
+        return false;
+    }
+
+    // Translate to local coordinates
+    x -= getX();
+    y -= getY();
+
+    // Translate to block coordinates
+    return block->hasSlopeCollision(x - block->getX(), y - block->getY());
+}
+
 bool Layer::hasTopCollision(int x, int y) const
 {
     auto block = getBlockAt(x, y);

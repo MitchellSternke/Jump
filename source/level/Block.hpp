@@ -81,9 +81,24 @@ public:
     bool hasRightCollision(int x, int y) const;
 
     /**
+     * Check if the block causes a slope collision from above at a particular pixel.
+     */
+    bool hasSlopeCollision(int x, int y) const;
+
+    /**
      * Check if the block causes a collision from the top at a particular pixel.
      */
     bool hasTopCollision(int x, int y) const;
+
+    /**
+     * Set the height of the block, in tiles.
+     */
+    void setHeight(int height);
+
+    /**
+     * Set the width of the block, in tiles.
+     */
+    void setWidth(int width);
 
 private:
     CollisionType collisionType;
