@@ -1,9 +1,11 @@
 #include <cmath>
 
+#include "../../input/InputManager.hpp"
 #include "../../level/Block.hpp"
 #include "../../level/Entity.hpp"
 #include "../../level/Layer.hpp"
 #include "../../level/Level.hpp"
+#include "../../level/entities/Player.hpp"
 #include "../../video/VideoManager.hpp"
 
 #include "LevelState.hpp"
@@ -12,6 +14,7 @@ static Entity* entity;
 static Layer* layer;
 static Layer* layer2;
 static Layer* layer3;
+static Player* player;
 
 LevelState::LevelState()
 {
@@ -52,7 +55,11 @@ LevelState::LevelState()
 
     entity = new Entity();
     entity->setAccelerationY(0.125f);
-    level->addEntity(entity);
+    //level->addEntity(entity);
+
+    player = new Player();
+    InputManager::getInstance().addListener(player);
+    level->addEntity(player);
 }
 
 LevelState::~LevelState()
@@ -72,8 +79,8 @@ void LevelState::onUpdate()
     counter++;
     layer->setVelocityX(std::cos(counter / 49.0f) * -2.0f);
     layer->setVelocityY(std::sin(counter / 15.0f));
-    layer2->setVelocityX(std::cos(counter / 60.0f) * 6.0f);
-    layer3->setVelocityX(std::sin(counter / 31.0f) * 2.0f);
+    //layer2->setVelocityX(std::cos(counter / 60.0f) * 6.0f);
+    //layer3->setVelocityX(std::sin(counter / 31.0f) * 2.0f);
 
     entity->setVelocityX(0.5f);
 

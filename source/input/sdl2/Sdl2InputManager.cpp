@@ -26,6 +26,8 @@ Sdl2InputManager::Sdl2InputManager() :
         }
         joysticks.push_back(joystick);
     }
+
+    setInstance(this);
 }
 
 Sdl2InputManager::~Sdl2InputManager()

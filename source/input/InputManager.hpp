@@ -21,6 +21,11 @@ public:
     void addListener(InputListener* listener);
 
     /**
+     * Get the singleton instance of the Input Manager.
+     */
+    static InputManager& getInstance();
+
+    /**
      * Get the state of a button.
      *
      * @return true if the button is pressed.
@@ -48,7 +53,13 @@ protected:
      */
     void notifyButtonPress(InputButton buttonId);
 
+    /**
+     * Set the singleton instance of the Input Manager.
+     */
+    static void setInstance(InputManager* newInstance);
+
 private:
+    static InputManager* instance;
     std::list<InputListener*> listeners;
 };
 

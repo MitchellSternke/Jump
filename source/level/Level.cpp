@@ -492,7 +492,7 @@ void Level::updateEntityMotionY(Entity& entity)
 
     // Move up/down one pixel at a time
     float dy = entity.velocityY;
-    while (dy>= 1.0f)
+    while (dy >= 1.0f)
     {
         if (moveEntityDown(entity))
         {
@@ -526,7 +526,7 @@ void Level::updateEntityMotionY(Entity& entity)
     }
     while (dy <= -1.0f)
     {
-        if (canEntityMoveUp(entity))
+        if (moveEntityUp(entity))
         {
             dy++;
         }
