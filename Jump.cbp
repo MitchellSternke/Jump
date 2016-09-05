@@ -63,6 +63,8 @@
 		<Unit filename="source/level/Layer.hpp" />
 		<Unit filename="source/level/Level.cpp" />
 		<Unit filename="source/level/Level.hpp" />
+		<Unit filename="source/level/entities/Player.cpp" />
+		<Unit filename="source/level/entities/Player.hpp" />
 		<Unit filename="source/video/VideoManager.hpp" />
 		<Unit filename="source/video/sdl2/Sdl2VideoManager.cpp" />
 		<Unit filename="source/video/sdl2/Sdl2VideoManager.hpp" />
