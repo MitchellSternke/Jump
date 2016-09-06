@@ -4,6 +4,7 @@
 #include "../GameState.hpp"
 
 class Level;
+class Player;
 
 /**
  * Game state that manages playing levels of the game.
@@ -19,6 +20,7 @@ public:
 
 private:
     Level* level;
+    Player* player;
 
     void onRender(VideoManager& video) const;
     void onUpdate();
