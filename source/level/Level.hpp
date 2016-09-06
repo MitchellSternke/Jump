@@ -32,6 +32,11 @@ public:
     void addLayer(Layer* layer);
 
     /**
+     * Check if an entity is standing on the ground of the level (i.e. not in the air).
+     */
+    bool isEntityOnGround(const Entity& entity) const;
+
+    /**
      * Render the level.
      *
      * @param video the VideoManager to use for drawing.

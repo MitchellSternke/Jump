@@ -29,6 +29,7 @@ Level::~Level()
 
 void Level::addEntity(Entity* entity)
 {
+    entity->level = this;
     entities.push_back(entity);
 }
 
@@ -109,6 +110,18 @@ bool Level::canEntityMoveUp(Entity& entity) const
         }
     }
     return true;
+}
+
+bool Level::isEntityOnGround(const Entity& entity) const
+{
+    for (auto layer : layers)
+    {
+        if (isEntityStandingOnLayer(*layer, entity))
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 bool Level::isEntityStandingOnLayer(const Layer& layer, const Entity& entity) const
@@ -411,7 +424,9 @@ void Level::update()
 
 void Level::updateEntity(Entity& entity)
 {
+    entity.velocityX += entity.accelerationX;
     updateEntityMotionX(entity);
+    entity.velocityY += entity.accelerationY;
     updateEntityMotionY(entity);
 
     entity.onUpdate();
@@ -419,8 +434,6 @@ void Level::updateEntity(Entity& entity)
 
 void Level::updateEntityMotionX(Entity& entity)
 {
-    entity.velocityX += entity.accelerationX;
-
     // Move left/right one pixel at a time
     float dx = entity.velocityX;
     while (dx >= 1.0f)
@@ -481,15 +494,16 @@ void Level::updateEntityMotionX(Entity& entity)
                 return;
             }
         }
-        entity.positionX += dx;
+        else
+        {
+            entity.positionX += dx;
+        }
         return;
     }
 }
 
 void Level::updateEntityMotionY(Entity& entity)
 {
-    entity.velocityY += entity.accelerationY;
-
     // Move up/down one pixel at a time
     float dy = entity.velocityY;
     while (dy >= 1.0f)

@@ -1,6 +1,8 @@
 #ifndef ENTITY_HPP
 #define ENTITY_HPP
 
+class Level;
+
 /**
  * A dynamic, moving object in a Level.
  */
@@ -32,6 +34,12 @@ public:
     int getLeft() const;
 
     /**
+     * Get the level that the entity belongs to.
+     */
+    Level& getLevel();
+    const Level& getLevel() const;
+
+    /**
      * Get the right x coordinate of the entity's bounding box, in pixels.
      */
     int getRight() const;
@@ -42,6 +50,16 @@ public:
     int getTop() const;
 
     /**
+     * Get the x velocity of the entity.
+     */
+    float getVelocityX() const;
+
+    /**
+     * Get the y velocity of the entity.
+     */
+    float getVelocityY() const;
+
+    /**
      * Get the x position of the enity, in pixels.
      */
     int getX() const;
@@ -50,6 +68,11 @@ public:
      * Get the y position of the entity, in pixels.
      */
     int getY() const;
+
+    /**
+     * Check if the entity is on the ground (i.e. not in the air).
+     */
+    bool isOnGround() const;
 
     /**
      * Set the x acceleration of an entity.
@@ -71,6 +94,16 @@ public:
      */
     void setVelocityY(float vy);
 
+    /**
+     * Set the x position of an entity.
+     */
+    void setX(float x);
+
+    /**
+     * Set the y position of an entity.
+     */
+    void setY(float y);
+
 protected:
     /**
      * Update event called every frame.
@@ -78,6 +111,7 @@ protected:
     virtual void onUpdate() {}
 
 private:
+    Level* level; /**< The level that the entity belongs to. */
     int width;  /**< Width, in pixels. */
     int height; /**< Height, in pixels. */
     float positionX; /**< X position, in pixels. */

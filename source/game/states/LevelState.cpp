@@ -1,5 +1,3 @@
-#include <cmath>
-
 #include "../../input/InputManager.hpp"
 #include "../../level/Entity.hpp"
 #include "../../level/Level.hpp"
@@ -15,6 +13,8 @@ LevelState::LevelState()
 
     player = new Player();
     InputManager::getInstance().addListener(player);
+    player->setX(Level::TILE_SIZE);
+    player->setY(Level::TILE_SIZE);
     level->addEntity(player);
 }
 

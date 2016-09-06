@@ -33,6 +33,7 @@ set(SOURCE_FILES
     source/level/Level.hpp
     source/test/TestLevels.hpp
     source/test/TestLevels.cpp
+    source/util/Util.hpp
     source/video/sdl2/Sdl2VideoManager.cpp
     source/video/sdl2/Sdl2VideoManager.hpp
     source/video/VideoManager.hpp
