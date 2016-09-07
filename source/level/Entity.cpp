@@ -81,6 +81,11 @@ bool Entity::isOnGround() const
     return level->isEntityOnGround(*this);
 }
 
+bool Entity::isUnderwater() const
+{
+    return level->isUnderwaterAt(getCenterX(), getCenterY());
+}
+
 void Entity::setAccelerationX(float ax)
 {
     accelerationX = ax;

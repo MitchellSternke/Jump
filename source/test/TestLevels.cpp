@@ -24,6 +24,11 @@ Level* createTestLevel()
     mainLayer->addBlock(6, 13, new Block(Block::CollisionType::SLOPE_LEFT));
     mainLayer->addBlock(9, 10, new Block(Block::CollisionType::SOLID));
 
+    Block* water = new Block(Block::CollisionType::WATER);
+    water->setWidth(4);
+    water->setHeight(4);
+    mainLayer->addBlock(15, 10, water);
+
     level->addLayer(mainLayer);
 
     return level;

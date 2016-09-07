@@ -142,6 +142,19 @@ bool Level::isEntityStandingOnLayer(const Layer& layer, const Entity& entity) co
     return false;
 }
 
+bool Level::isUnderwaterAt(int x, int y) const
+{
+    for (auto layer : layers)
+    {
+        const Block* block = layer->getBlockAt(x, y);
+        if (block != nullptr && block->collisionType == Block::CollisionType::WATER)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 bool Level::moveEntityDown(Entity& entity)
 {
     if (canEntityMoveDown(entity))
@@ -392,6 +405,15 @@ void Level::render(VideoManager& video, int left, int right, int top, int bottom
                     block->getLeft() + xOffset, block->getTop() + yOffset,
                     block->getRight() + 1 + xOffset, block->getTop() + yOffset);
                 break;
+            case Block::CollisionType::WATER:
+                video.setColor(0x0000ff);
+                video.drawRectangle(
+                    block->getX() + xOffset,
+                    block->getY() + yOffset,
+                    block->getWidth(),
+                    block->getHeight()
+                );
+                break;
 
             default:
                 break;
@@ -403,7 +425,7 @@ void Level::render(VideoManager& video, int left, int right, int top, int bottom
     for (auto entity : entities)
     {
         video.setColor(0xff0000);
-        video.drawRectangle(entity->positionX, entity->positionY, entity->width, entity->height);
+        video.drawRectangle(entity->getX(), entity->getY(), entity->width, entity->height);
     }
 }
 

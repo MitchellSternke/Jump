@@ -75,6 +75,11 @@ public:
     bool isOnGround() const;
 
     /**
+     * Check if the entity is underwater.
+     */
+    bool isUnderwater() const;
+
+    /**
      * Set the x acceleration of an entity.
      */
     void setAccelerationX(float ax);

@@ -37,6 +37,11 @@ public:
     bool isEntityOnGround(const Entity& entity) const;
 
     /**
+     * Check if a position in the level is underwater.
+     */
+    bool isUnderwaterAt(int x, int y) const;
+
+    /**
      * Render the level.
      *
      * @param video the VideoManager to use for drawing.

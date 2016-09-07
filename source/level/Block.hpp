@@ -18,7 +18,8 @@ public:
         PLATFORM,    /**< Block only causes collisions from the top row of pixels from above. */
         SLOPE_LEFT,  /**< Block is slope shaped, increasing in height to the left, and behaves like a platform. */
         SLOPE_RIGHT, /**< Block is slope shaped, increasing in height to the right, and behaves like a platform. */
-        SOLID        /**< Block causes collisions on all 4 sides. */
+        SOLID,       /**< Block causes collisions on all 4 sides. */
+        WATER        /**< Block triggers water physics. */
     };
 
     Block(CollisionType collisionType);
